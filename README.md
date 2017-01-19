@@ -41,13 +41,13 @@ TalkieManager.destroy();
 3、 用户授权
 ```java
 /**
- * 对讲服务器连接
+ * 用户授权
  * @param appid(String)  应用唯一标识
  * @param userid(String) 业务系统中的用户唯一标识
  */
 TalkieManager.login(appid, userid, new TalkieClient.ConnectCallback(){
       /**
-       * 对讲服务器连接成功
+       * 用户授权成功
        * @param openid 对讲服务器为授权用户分配的唯一标识
        */
       @Override
@@ -56,7 +56,7 @@ TalkieManager.login(appid, userid, new TalkieClient.ConnectCallback(){
       }
 
       /**
-       * 对讲服务器连接失败
+       * 用户授权失败
        * @param errorCode 错误码，查看错误码对应的注释
        */
       @Override
