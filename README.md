@@ -38,7 +38,7 @@ TalkieManager.init(activity);
 TalkieManager.destroy();
 ```
 
-1、 用户授权
+3、 用户授权
 ```java
 /**
  * 对讲服务器连接
@@ -67,7 +67,7 @@ TalkieManager.login(appid, userid, new TalkieClient.ConnectCallback(){
 ```
 **Tips：业务系统需要自己唯护userid和openid的对应关系，本文档中的其它方法中会使用openid作为用户的唯一标识**
 
-2、 进入频道
+4、 进入频道
 ```java
 TalkieManager.online(new TalkieClient.OnlineCallback(){
       /**
@@ -90,13 +90,13 @@ TalkieManager.online(new TalkieClient.OnlineCallback(){
 ```
 **Tips：只有进入频道后才能请求发言、更新位置、收到其它用户的发言和位置**
 
-3、 离开频道
+5、 离开频道
 ```java
 TalkieManager.offline();
 ```
 **Tips：离开频道后不能请求发言、更新位置、收到其它用户的发言和位置**
 
-4、 请求发言
+6、 请求发言
 ```java
 TalkieManager.reqSpeak(new TalkieClient.ReqSpeakCallback(){
       /**
@@ -118,12 +118,12 @@ TalkieManager.reqSpeak(new TalkieClient.ReqSpeakCallback(){
     });
 ```
 
-5、 结束发言
+7、 结束发言
 ```java
 TalkieManager.stopSpeak();
 ```
 
-6、 更新位置
+8、 更新位置
 ```java
 /**
  * 更新位置
@@ -135,7 +135,7 @@ TalkieManager.stopSpeak();
 TalkieManager.location(lat, lon, speed, direction);
 ```
 
-7、 其它用户开始发言事件
+9、 其它用户开始发言事件
 ```java
 TalkieManager.setOtherStartSpeakListener(new TalkieClient.StartSpeakListener(){
       /**
@@ -149,7 +149,7 @@ TalkieManager.setOtherStartSpeakListener(new TalkieClient.StartSpeakListener(){
     });
 ```
 
-8、 其它用户结束发言事件
+10、 其它用户结束发言事件
 ```java
 TalkieManager.setOtherStopSpeakListener(new TalkieClient.StopSpeakListener(){
       /**
@@ -163,7 +163,7 @@ TalkieManager.setOtherStopSpeakListener(new TalkieClient.StopSpeakListener(){
     });
 ```
 
-9、 其它用户位置变更事件
+11、 其它用户位置变更事件
 ```java
 TalkieManager.setOtherLocationListener(new TalkieClient.LocationListener(){
       /**
@@ -181,7 +181,7 @@ TalkieManager.setOtherLocationListener(new TalkieClient.LocationListener(){
     });
 ```
 
-10、 连接状态变更事件
+12、 连接状态变更事件
 ```java
 TalkieManager.setConnectStateListener(new TalkieClient.ConnectStateListener(){
       /**
