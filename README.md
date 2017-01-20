@@ -11,7 +11,7 @@
 
 <h2 id="配置开发环境">一、配置开发环境</h2>
 
-在Android工程中加入SDK所需的lib文件，以android-studio为例，如下图所示
+在Android工程中加入TalkieSdk_1.0.jar和所需的jniLibs文件。
 
 在AndroidManifest.xml文件中加入下面内容：
 ```java
@@ -21,7 +21,7 @@
    <uses-permission android:name="android.permission.INTERNET"/>
    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
-   <service android:name="net.easyconn.sdk.talkie.ImService"
+   <service android:name="net.easyconn.talkie.im.ImService"
             android:enabled="true"
             android:exported="true" />
 ```
