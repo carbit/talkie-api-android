@@ -1,0 +1,1 @@
+include ':app'//, ':talkie_sdk'
