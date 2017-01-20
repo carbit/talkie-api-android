@@ -60,7 +60,7 @@ TalkieManager.login(appid, userid, new TalkieClient.ConnectCallback(){
        * @param errorCode 错误码，查看错误码对应的注释
        */
       @Override
-      public void onError(TalkieClient.ErrorCode errorCode) {
+      public void onError(int errorCode, String errorMsg) {
 
       }
     });
@@ -83,7 +83,7 @@ TalkieManager.online(new TalkieClient.OnlineCallback(){
        * @param errorCode 错误码，查看错误码对应的注释
        */
       @Override
-      public void onError(TalkieClient.ErrorCode errorCode) {
+      public void onError(int errorCode, String errorMsg) {
 
       }
     });
@@ -112,7 +112,7 @@ TalkieManager.reqSpeak(new TalkieClient.ReqSpeakCallback(){
        * @param errorCode 错误码，查看错误码对应的注释
        */
       @Override
-      public void onError(TalkieClient.ErrorCode errorCode) {
+      public void onError(int errorCode, String errorMsg) {
 
       }
     });
@@ -157,7 +157,7 @@ TalkieManager.setOtherStopSpeakListener(new TalkieClient.StopSpeakListener(){
        * @param openid 授权用户唯一标识
        */
       @Override
-      public void onStopSpeak(String openid) {
+      public void onStopSpeak() {
 
       }
     });
