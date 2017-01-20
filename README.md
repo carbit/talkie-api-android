@@ -11,7 +11,7 @@
 
 <h2 id="配置开发环境">一、配置开发环境</h2>
 
-在Android工程中加入SDK所需的lib文件，以android-studio为例，如下图所示
+在Android工程中加入TalkieSdk_1.0.jar和所需的jniLibs文件。
 
 在AndroidManifest.xml文件中加入下面内容：
 ```java
@@ -21,7 +21,7 @@
    <uses-permission android:name="android.permission.INTERNET"/>
    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
-   <service android:name="net.easyconn.sdk.talkie.ImService"
+   <service android:name="net.easyconn.talkie.im.ImService"
             android:enabled="true"
             android:exported="true" />
 ```
@@ -32,6 +32,7 @@
 ```java
 TalkieManager.init(activity);
 ```
+**Tips：建议放置第一个Activity的onCreate方法里**
 
 2、 摧毁服务
 ```java
@@ -135,7 +136,20 @@ TalkieManager.stopSpeak();
 TalkieManager.location(lat, lon, speed, direction);
 ```
 
-9、 其它用户开始发言事件
+9、 发言超过30秒服务器结束发言通知事件
+```java
+TalkieManager.setStopSpeakNtfListener(new TalkieClient.StopSpeakNtfListener(){
+      /**
+       * 发言超过30秒服务器结束发言通知事件
+       */
+      @Override
+      public void onStopSpeakNtfListener() {
+
+      }
+   });
+```
+
+10、 其它用户开始发言事件
 ```java
 TalkieManager.setOtherStartSpeakListener(new TalkieClient.StartSpeakListener(){
       /**
@@ -149,7 +163,7 @@ TalkieManager.setOtherStartSpeakListener(new TalkieClient.StartSpeakListener(){
     });
 ```
 
-10、 其它用户结束发言事件
+11、 其它用户结束发言事件
 ```java
 TalkieManager.setOtherStopSpeakListener(new TalkieClient.StopSpeakListener(){
       /**
@@ -163,7 +177,7 @@ TalkieManager.setOtherStopSpeakListener(new TalkieClient.StopSpeakListener(){
     });
 ```
 
-11、 其它用户位置变更事件
+12、 其它用户位置变更事件
 ```java
 TalkieManager.setOtherLocationListener(new TalkieClient.LocationListener(){
       /**
@@ -181,7 +195,7 @@ TalkieManager.setOtherLocationListener(new TalkieClient.LocationListener(){
     });
 ```
 
-12、 连接状态变更事件
+13、 连接状态变更事件
 ```java
 TalkieManager.setConnectStateListener(new TalkieClient.ConnectStateListener(){
       /**
