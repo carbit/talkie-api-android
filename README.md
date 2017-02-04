@@ -26,6 +26,14 @@
             android:exported="true" />
 ```
 
+还必需引入两个Jar库
+```
+    compile('io.socket:socket.io-client:0.7.0') {
+        exclude group: 'org.json', module: 'json'
+    }
+    compile 'com.squareup.okhttp:okhttp:+'
+```
+
 <h2 id="SDK接入步骤">二、SDK接入步骤</h2>
 
 1、 初始化
