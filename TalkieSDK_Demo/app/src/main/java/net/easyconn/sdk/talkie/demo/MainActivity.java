@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.regist).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TalkieManager.login("", edRegist.getText().toString().trim(), new TalkieClient.ConnectCallback() {
+                TalkieManager.login("demo", edRegist.getText().toString().trim(), new TalkieClient.ConnectCallback() {
                     @Override
                     public void onSuccess(String openid) {
                         showToast("登录成功");
