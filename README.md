@@ -78,7 +78,11 @@ TalkieManager.login(appid, userid, new TalkieClient.ConnectCallback(){
 
 4、 进入频道
 ```java
-TalkieManager.online(new TalkieClient.OnlineCallback(){
+/**
+ * 加入房间
+ * @param roomId(String)  房间号
+ */
+TalkieManager.online(roomId, new TalkieClient.OnlineCallback(){
       /**
        * 进入房间成功
        */
