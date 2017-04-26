@@ -225,3 +225,8 @@ TalkieManager.setConnectStateListener(new TalkieClient.ConnectStateListener(){
       }
     });
 ```
+
+14、 设置对讲播放音量
+```java
+      TalkieManager.setTalkieVolume(volume);
+```
