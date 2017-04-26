@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView mTvLocation;
 
+    private float volume = 1.0F;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.regist).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TalkieManager.login("demo", edRegist.getText().toString().trim(), new TalkieClient.ConnectCallback() {
+                TalkieManager.login("2323123", edRegist.getText().toString().trim(), new TalkieClient.ConnectCallback() {
                     @Override
                     public void onSuccess(String openid) {
                         showToast("登录成功");
@@ -121,8 +123,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TalkieManager.stopSpeak();
-                txReqSpeak.setText("手动丢麦");
-                isClickStop = true;
+//                txReqSpeak.setText("手动丢麦");
+//                isClickStop = true;
             }
         });
 
@@ -142,11 +144,28 @@ public class MainActivity extends AppCompatActivity {
 
         TalkieManager.setStopSpeakNtfListener(new TalkieClient.StopSpeakNtfListener() {
             @Override
-            public void onStopSpeakNtfListener() {
-                if(!isClickStop) {
-                    txReqSpeak.setText("抢麦超过30秒，服务器通知丢麦");
+            public void onStopSpeakNtfListener(int state) {
+                switch (state) {
+                    case TalkieClient.StopSpeakNtfListener.STOP_HAND:
+                        txReqSpeak.setText("手动丢麦");
+                        break;
+                    case TalkieClient.StopSpeakNtfListener.STOP_AUTO:
+                        txReqSpeak.setText("自动丢麦");
+                        break;
+                    case TalkieClient.StopSpeakNtfListener.STOP_SERVER:
+                        txReqSpeak.setText("抢麦超过30秒 服务器通知丢麦");
+                        break;
+                    case TalkieClient.StopSpeakNtfListener.STOP_PHONE:
+                        txReqSpeak.setText("来电（去电）状态丢麦");
+                        break;
+                    case TalkieClient.StopSpeakNtfListener.STOP_NETWORK:
+                        txReqSpeak.setText("网络断开 丢麦");
+                        break;
+                    default:
+                        break;
                 }
-                isClickStop = false;
+
+//                isClickStop = false;
             }
         });
 
@@ -162,6 +181,21 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onLocationListener(String openid, double lat, double lon, int speed, int direction) {
                 mTvLocation.setText(String.format("%s位置变更纬度:%s 经度:%s", openid, lat, lon));
+            }
+        });
+
+        findViewById(R.id.volume_add).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                volume = volume + 0.05F;
+                TalkieManager.setTalkieVolume(volume);
+            }
+        });
+        findViewById(R.id.volume_minus).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                volume = volume - 0.05F;
+                TalkieManager.setTalkieVolume(volume);
             }
         });
     }

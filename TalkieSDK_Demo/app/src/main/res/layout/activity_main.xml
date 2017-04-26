@@ -58,7 +58,7 @@
             android:layout_height="60dp"
             android:imeOptions="flagNoExtractUi"
             android:inputType="number"
-            android:text="1111"
+            android:text="12345"
             />
 
         <TextView
@@ -130,6 +130,29 @@
             android:id="@+id/tv_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/volume_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="音量+5"
+            android:textSize="25dp"/>
+
+        <Button
+            android:id="@+id/volume_minus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="音量-5"
+            android:textSize="24sp"/>
+
     </LinearLayout>
 
     <TextView
