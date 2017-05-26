@@ -408,7 +408,7 @@ https://open.carbit.com.cn/talkie/oauth2/connect?appid=APPID&callback_url=CALLBA
 |scope| 是　　　 | 填snsapi_login  |
 |state| 否　　　 | 用于保持请求和回调的状态，授权请求后原样带回给第三方。该参数可用于防止csrf攻击（跨站请求伪造攻击），建议第三方带上该参数，可设置为简单的随机数加session进行校验  |
 
-** 返回说明 **
+* 返回说明 *
 
 用户允许授权后，将会回调到callback_url地址上，并且带上code和state参数
 ```
@@ -425,7 +425,7 @@ https://open.carbit.com.cn/talkie/oauth2/connect?appid=APPID&callback_url=CALLBA
 
 https://open.carbit.com.cn/talkie/oauth2/login?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
 
-** 参数说明 **
+* 参数说明 *
 
 |参数    | 是否必须 | 说明   |
 |--------|:------------:|-------|
@@ -434,7 +434,7 @@ https://open.carbit.com.cn/talkie/oauth2/login?appid=APPID&secret=SECRET&code=CO
 |code| 是　　　 | 填写第一步获取的code参数  |
 |grant_type| 是　　　 | 填snsapi_login  |
 
-** 返回说明 **
+* 返回说明 *
 
 正确的返回：
 ```
