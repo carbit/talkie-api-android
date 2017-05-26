@@ -398,7 +398,7 @@ Server授权整体流程：
 
 https://open.carbit.com.cn/talkie/oauth2/connect?appid=APPID&callback_url=CALLBACK_URL&response_type=code&scope=SCOPE&state=STATE
 
-** 参数说明 **
+__ 参数说明 __
 
 |参数    | 是否必须 | 说明   |
 |--------|:------------:|-------|
