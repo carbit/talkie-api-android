@@ -399,8 +399,8 @@ Server授权整体流程：
 https://open.carbit.com.cn/talkie/connect?appid=APPID&callback_url=CALLBACK_URL&response_type=code&scope=SCOPE&state=STATE
 
 |参数    | 是否必须      | 说明   |
-|--------|-------------|-------|
-|appid  | 是　　　　　　　| 应用唯一标识 |
+|--------|:------------:|-------|
+|appid  | 是          | 应用唯一标识 |
 |callback_url | 是          | 回调地址, 需要进行UrlEncode
 |response_type| 是          | 填code  |
 |scope| 是          | 填snsapi_login  |
