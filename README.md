@@ -400,10 +400,10 @@ https://open.carbit.com.cn/talkie/connect?appid=APPID&callback_url=CALLBACK_URL&
 
 |参数    | 是否必须      | 说明   |
 |--------|:------------:|-------|
-|appid  | 是          | 应用唯一标识 |
-|callback_url | 是          | 回调地址, 需要进行UrlEncode
-|response_type| 是          | 填code  |
-|scope| 是          | 填snsapi_login  |
-|state| 否          | 用于保持请求和回调的状态，授权请求后原样带回给第三方。该参数可用于防止csrf攻击（跨站请求伪造攻击），建议第三方带上该参数，可设置为简单的随机数加session进行校验   |
+|appid  | 　　是　　  | 应用唯一标识 |
+|callback_url | 　　是　　 | 回调地址, 需要进行UrlEncode
+|response_type| 　　是　　 | 填code  |
+|scope| 　　是　　 | 填snsapi_login  |
+|state| 　否　　 | 用于保持请求和回调的状态，授权请求后原样带回给第三方。该参数可用于防止csrf攻击（跨站请求伪造攻击），建议第三方带上该参数，可设置为简单的随机数加session进行校验  |
 
 
