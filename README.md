@@ -459,9 +459,8 @@ https://open.carbit.com.cn/talkie/oauth2/login?appid=APPID&secret=SECRET&code=CO
 ```java
 /**
  * 用户授权
- * @param appId(String)  应用唯一标识
- * @param appSecret(String) 安全码
- * @param userid(String) 业务系统中的用户唯一标识
+ * @param openId(String)
+ * @param token(String)
  */
 TalkieManager.setToken(openId, token, new TalkieClient.OperationCallback(){
       /**
