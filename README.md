@@ -392,18 +392,92 @@ Server授权整体流程：
 3. 将openId和token设置给SDK, 实现其他操作。
 ```
 
-#### 第一步：请求CODE
+### 第一步：请求CODE
 
 第三方Server访问如下链接：
 
-https://open.carbit.com.cn/talkie/connect?appid=APPID&callback_url=CALLBACK_URL&response_type=code&scope=SCOPE&state=STATE
+https://open.carbit.com.cn/talkie/oauth2/connect?appid=APPID&callback_url=CALLBACK_URL&response_type=code&scope=SCOPE&state=STATE
+
+** 参数说明 **
 
 |参数    | 是否必须 | 说明   |
 |--------|:------------:|-------|
 |appid  | 是　　　  | 应用唯一标识 |
-|callback_url | 是　　　 | 回调地址, 需要进行UrlEncode
+|callback_url | 是　　　 | 回调地址, 需要进行UrlEncode |
 |response_type| 是　　　 | 填code  |
 |scope| 是　　　 | 填snsapi_login  |
 |state| 否　　　 | 用于保持请求和回调的状态，授权请求后原样带回给第三方。该参数可用于防止csrf攻击（跨站请求伪造攻击），建议第三方带上该参数，可设置为简单的随机数加session进行校验  |
 
+** 返回说明 **
 
+用户允许授权后，将会回调到callback_url地址上，并且带上code和state参数
+```
+  callback_url?code=CODE&state=STATE
+```
+若用户禁止授权，则回调不会带上code参数，仅会带上stage参数
+```
+  callback_url?state=STATE
+```
+
+### 第二步：通过code申请openId和token
+
+第三方Server访问如下链接：
+
+https://open.carbit.com.cn/talkie/oauth2/login?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
+
+** 参数说明 **
+
+|参数    | 是否必须 | 说明   |
+|--------|:------------:|-------|
+|appid  | 是　　　  | 应用唯一标识 |
+|secret | 是　　　 | 安全码 |
+|code| 是　　　 | 填写第一步获取的code参数  |
+|grant_type| 是　　　 | 填snsapi_login  |
+
+** 返回说明 **
+
+正确的返回：
+```
+  {
+    "code": 0,
+    "context":{
+      "openId": "3249234792347023",
+      "token": "20c1ab1ff1b4fb93b79395c449090d8a"
+    }
+  }
+```
+
+错误返回：
+```
+  {
+    "code": -400
+  }
+```
+
+### 第三步：将openId和token设置给SDK
+
+```java
+/**
+ * 用户授权
+ * @param appId(String)  应用唯一标识
+ * @param appSecret(String) 安全码
+ * @param userid(String) 业务系统中的用户唯一标识
+ */
+TalkieManager.setToken(openId, token, new TalkieClient.OperationCallback(){
+      /**
+       * token验证成功
+       */
+      @Override
+      public void onSuccess() {
+
+      }
+
+      /**
+       * token验证失败
+       * @param errorCode 错误码，查看错误码对应的注释
+       */
+      @Override
+      public void onError(int errorCode, String errorMsg) {
+
+      })
+```
