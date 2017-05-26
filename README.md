@@ -273,10 +273,10 @@ TalkieManager.location(lat, lon, speed, direction);
 ```java
 TalkieManager.setStopSpeakNtfListener(new TalkieClient.StopSpeakNtfListener(){
       /**
-       * 发言超过30秒服务器结束发言通知事件
-       */
+       * @param state 0 手动、3 服务器打断、4 自动丢麦、5 来电丢麦、6 网络原因打断
+       */
       @Override
-      public void onStopSpeakNtfListener() {
+      public void onStopSpeakNtfListener(int state) {
 
       }
    });
@@ -324,61 +324,42 @@ TalkieManager.setOtherLocationListener(new TalkieClient.LocationListener(){
     });
 ```
 
-20、 连接状态变更事件
-```java
-TalkieManager.setConnectStateListener(new TalkieClient.ConnectStateListener(){
-      /**
-       * 连接状态变更事件
-       * @param connectionStatus 状态变更
-       */
-      @Override
-      public void onStateChange(ConnectionStatus connectionStatus){
-          case CONNECTED://连接成功。
-
-              break;
-          case DISCONNECTED://断开连接。
-
-              break;
-      }
-    });
-```
-
-21、 设置对讲播放音量
+20、 设置对讲播放音量
 ```java
 TalkieManager.setTalkieVolume(volume);
 ```
 
-22、修改房间名称
+21、修改房间名称
 ```java
 TalkieManager.setRoomName(roomId, name, new TalkieClient.OperationCallback(){});
 ```
 
-23、静音开关
+22、静音开关
 ```java
 TalkieManager.setGlobalMute(isMute, new TalkieClient.OperationCallback(){});
 ```
 
-24、位置共享开关
+23、位置共享开关
 ```java
 TalkieManager.setLocationSharing(roomId, isSharing, new TalkieClient.OperationCallback(){});
 ```
 
-25、增加/修改管理员
+24、增加/修改管理员
 ```java
 TalkieManager.setRoomAdmin(roomId, openId, new TalkieClient.OperationCallback(){});
 ```
 
-26、踢人
+25、踢人
 ```java
 TalkieManager.kickUser(roomId, openId, hour, new TalkieClient.OperationCallback(){});
 ```
 
-27、禁言
+26、禁言
 ```java
 TalkieManager.silenced(roomId, openId, hour, new TalkieClient.OperationCallback(){});
 ```
 
-28、获得发言状态
+27、获得发言状态
 ```java
 TalkieManager.getSpeakState();
 ```
