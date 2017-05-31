@@ -212,10 +212,8 @@ TalkieManager.getRoomInfo(roomId, new TalkieClient.ResultCallback<RoomInfo>(){
 
 12、获得频道成员列表
 ```java
-//TODU
-这里需要分页
-TalkieManager.getUserList(roomId, new TalkieClient.ResultCallback<List <UserInfo>>(){
-      public void onResult(List <UserInfo> list){
+TalkieManager.getUserList(roomId, page, size, new TalkieClient.PageResultCallback<List <UserInfo>>(){
+      public void onResult(List <UserInfo> list, total){
       
       }
 })
