@@ -221,7 +221,7 @@ TalkieManager.getUserList(roomId, page, size, new TalkieClient.PageResultCallbac
 
 13、获得成员信息和设置
 ```java
-TalkieManager.getUserInfo(openId, new TalkieClient.ResultCallback<UserInfo>(){
+TalkieManager.getUserInfo(roomId, openId, new TalkieClient.ResultCallback<UserInfo>(){
       public void onResult(UserInfo userInfo){
       
       }
@@ -267,22 +267,74 @@ TalkieManager.stopSpeak();
 TalkieManager.location(lat, lon, speed, direction);
 ```
 
-17、 发言超过30秒服务器结束发言通知事件
+17、 设置对讲播放音量
 ```java
-TalkieManager.setStopSpeakNtfListener(new TalkieClient.StopSpeakNtfListener(){
+TalkieManager.setTalkieVolume(volume);
+```
+
+18、修改房间名称
+```java
+TalkieManager.setRoomName(roomId, name, new TalkieClient.OperationCallback(){});
+```
+
+19、静音开关
+```java
+TalkieManager.setGlobalMute(isMute, new TalkieClient.OperationCallback(){});
+```
+
+20、位置共享开关
+```java
+TalkieManager.setLocationSharing(roomId, isSharing, new TalkieClient.OperationCallback(){});
+```
+
+21、设置房间管理角色
+```java
+TalkieManager.setRoomRole(roomId, openId, role, new TalkieClient.OperationCallback(){});
+```
+
+22、踢人
+```java
+TalkieManager.kickUser(roomId, openId, hour, new TalkieClient.OperationCallback(){});
+```
+
+23、禁言
+```java
+TalkieManager.silenced(roomId, openId, hour, new TalkieClient.OperationCallback(){});
+```
+
+24、获得发言状态
+```java
+TalkieManager.getSpeakState();
+```
+
+25、 设置自己的通知事件
+```java
+TalkieManager.setNotificationListener(new TalkieClient.NotificationListener(){
       /**
        * @param state 0 手动、3 服务器打断、4 自动丢麦、5 来电丢麦、6 网络原因打断
        */
       @Override
-      public void onStopSpeakNtfListener(int state) {
+      public void onStopSpeakNtf(int state) {
 
       }
-   });
+      
+      public void onRoleChange(int role){
+      
+      }
+      
+      public void onKick(){
+      
+      }
+      
+      public void onSilence(){
+      
+      }
+   });
 ```
 
-18、 其它用户开始发言事件
+26、 其它用户变更事件
 ```java
-TalkieManager.setOtherSpeakListener(new TalkieClient.StartSpeakListener(){
+TalkieManager.setOtherUserChangeListener(new TalkieClient.LocationListener(){
       /**
        * 其它用户开始发言事件
        * @param openid 授权用户唯一标识
@@ -291,22 +343,16 @@ TalkieManager.setOtherSpeakListener(new TalkieClient.StartSpeakListener(){
       public void onStartSpeak(String openid) {
 
       }
-    });
     
-    /**
+      /**
        * 其它用户结束发言事件
        * @param openid 授权用户唯一标识
        */
       @Override
-      public void onStopSpeak() {
+      public void onStopSpeak(String openid) {
 
       }
-    });
-```
-
-19、 其它用户位置变更事件
-```java
-TalkieManager.setOtherLocationListener(new TalkieClient.LocationListener(){
+      
       /**
        * 其它用户位置变更事件
        * @param openid 授权用户唯一标识
@@ -316,50 +362,15 @@ TalkieManager.setOtherLocationListener(new TalkieClient.LocationListener(){
        * @param direction 方向
        */
       @Override
-      public void onLocationListener(String openid, float lat, float lon, int speed, int direction) {
+      public void onLocationChange(String openid, float lat, float lon, int speed, int direction) {
+
+      }
+      
+      @Override
+      public void onRoleChange(String openid, int layer) {
 
       }
     });
-```
-
-20、 设置对讲播放音量
-```java
-TalkieManager.setTalkieVolume(volume);
-```
-
-21、修改房间名称
-```java
-TalkieManager.setRoomName(roomId, name, new TalkieClient.OperationCallback(){});
-```
-
-22、静音开关
-```java
-TalkieManager.setGlobalMute(isMute, new TalkieClient.OperationCallback(){});
-```
-
-23、位置共享开关
-```java
-TalkieManager.setLocationSharing(roomId, isSharing, new TalkieClient.OperationCallback(){});
-```
-
-24、增加/修改管理员
-```java
-TalkieManager.setRoomAdmin(roomId, openId, new TalkieClient.OperationCallback(){});
-```
-
-25、踢人
-```java
-TalkieManager.kickUser(roomId, openId, hour, new TalkieClient.OperationCallback(){});
-```
-
-26、禁言
-```java
-TalkieManager.silenced(roomId, openId, hour, new TalkieClient.OperationCallback(){});
-```
-
-27、获得发言状态
-```java
-TalkieManager.getSpeakState();
 ```
 
 <h2 id="Server授权">三、Server授权</h2>
