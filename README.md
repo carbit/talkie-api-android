@@ -413,7 +413,7 @@ https://open.carbit.com.cn/talkie/oauth2/connect?appid=APPID&callback_url=CALLBA
 
 第三方Server访问如下链接：
 
-https://open.carbit.com.cn/talkie/oauth2/login?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
+https://open.carbit.com.cn/talkie/oauth2/login?appid=APPID&secret=SECRET&code=CODE&userid=USERIDgrant_type=authorization_code
 
 * 参数说明
 
@@ -422,6 +422,7 @@ https://open.carbit.com.cn/talkie/oauth2/login?appid=APPID&secret=SECRET&code=CO
 |appid  | 是　　　  | 应用唯一标识 |
 |secret | 是　　　 | 安全码 |
 |code| 是　　　 | 填写第一步获取的code参数  |
+|userid| 是　　　 | 第三方服务器的用户唯一标识 |
 |grant_type| 是　　　 | 填snsapi_login  |
 
 * 返回说明
