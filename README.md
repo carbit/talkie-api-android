@@ -40,7 +40,10 @@
 
 1、 初始化
 ```java
-TalkieManager.init(context);
+/**
+ * @param appId(String)  应用唯一标识
+ */
+TalkieManager.init(context, appId);
 ```
 
 2、 摧毁服务
@@ -53,11 +56,10 @@ TalkieManager.destroy();
 ```java
 /**
  * 用户授权
- * @param appId(String)  应用唯一标识
  * @param appSecret(String) 安全码
  * @param userid(String) 业务系统中的用户唯一标识
  */
-TalkieManager.login(appId, appSecret, userid, new TalkieClient.ConnectCallback(){
+TalkieManager.login(appSecret, userid, new TalkieClient.ConnectCallback(){
       /**
        * 用户授权成功
        * @param openid 对讲服务器为授权用户分配的唯一标识
