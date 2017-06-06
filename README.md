@@ -41,9 +41,9 @@
 1、 初始化
 ```java
 /**
- * @param appId(String)  应用唯一标识
+ * @param projectid(String)  应用唯一标识
  */
-TalkieManager.init(context, appId);
+TalkieManager.init(context, projectid);
 ```
 
 2、 摧毁服务
@@ -380,7 +380,7 @@ TalkieManager.setOtherUserChangeListener(new TalkieClient.LocationListener(){
 Server授权整体流程：
 ```
 1. 第三方Server发起授权登录请求, 对讲服务器向第三方Server指定URL发送回调请求, 并且带上授权临时票据code参数;
-2. 通过code参数加上appId、appSecret、userId等，通过API向对讲服务器换取openId和token;
+2. 通过code参数加上projectid、appSecret、userId等，通过API向对讲服务器换取openId和token;
 3. 将openId和token设置给SDK, 实现其他操作。
 ```
 
@@ -388,13 +388,13 @@ Server授权整体流程：
 
 第三方Server访问如下链接：
 
-https://open.carbit.com.cn/talkie/oauth2/connect?appid=APPID&callback_url=CALLBACK_URL&response_type=code&scope=SCOPE&state=STATE
+https://open.carbit.com.cn/talkie/oauth2/connect?projectid=PROJECTID&callback_url=CALLBACK_URL&response_type=code&scope=SCOPE&state=STATE
 
 * 参数说明
 
 |参数    | 是否必须 | 说明   |
 |--------|:------------:|-------|
-|appid  | 是　　　  | 应用唯一标识 |
+|projectid  | 是　　　  | 应用唯一标识 |
 |callback_url | 是　　　 | 回调地址, 需要进行UrlEncode |
 |response_type| 是　　　 | 填code  |
 |scope| 是　　　 | 填snsapi_login  |
@@ -415,13 +415,13 @@ https://open.carbit.com.cn/talkie/oauth2/connect?appid=APPID&callback_url=CALLBA
 
 第三方Server访问如下链接：
 
-https://open.carbit.com.cn/talkie/oauth2/login?appid=APPID&secret=SECRET&code=CODE&userid=USERIDgrant_type=authorization_code
+https://open.carbit.com.cn/talkie/oauth2/login?projectid=PROJECTID&secret=SECRET&code=CODE&userid=USERIDgrant_type=authorization_code
 
 * 参数说明
 
 |参数    | 是否必须 | 说明   |
 |--------|:------------:|-------|
-|appid  | 是　　　  | 应用唯一标识 |
+|projectid  | 是　　　  | 应用唯一标识 |
 |secret | 是　　　 | 安全码 |
 |code| 是　　　 | 填写第一步获取的code参数  |
 |userid| 是　　　 | 第三方服务器的用户唯一标识 |
