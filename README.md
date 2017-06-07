@@ -395,6 +395,13 @@ TalkieManager.setNotificationListener(new TalkieClient.NotificationListener(){
       public void onStopSpeak(StopSpeakType type) {
 
       }
+      /**
+       * 房间人数改变回调
+       */
+      @Override
+      public void onRoomSizeChange(int onlineSize, int totalSize) {
+
+      }
 	  /**
        * 自己的角色被改变时回调
        */
@@ -679,6 +686,7 @@ public enum StopSpeakType {
 ```
 
 <h3>其他</h3>
+
 1、用户权限说明
 ```java
 public class Permission {
