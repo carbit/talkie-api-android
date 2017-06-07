@@ -9,6 +9,8 @@
 
 [三、Server授权](#Server授权)
 
+[四、类说明](#类说明)
+
 ------------------
 
 <h2 id="配置开发环境">一、配置开发环境</h2>
@@ -325,6 +327,9 @@ TalkieManager.setLocationSharing(roomId, isSharing, new TalkieClient.OperationCa
 
 24、设置房间管理角色
 ```java
+/**
+* @param role 角色 参照RoomRole枚举
+*/
 TalkieManager.setRoomRole(roomId, openId, role, new TalkieClient.OperationCallback(){
 	@Override
 	public void onSuccess() {
@@ -365,7 +370,7 @@ TalkieManager.silenced(roomId, openId, hour, new TalkieClient.OperationCallback(
 });
 ```
 
-27、取消禁言
+27、取消禁言（暂未实现）
 ```java
 TalkieManager.unSilenced(roomId, openId, new TalkieClient.OperationCallback(){
 	@Override
@@ -384,22 +389,16 @@ TalkieManager.unSilenced(roomId, openId, new TalkieClient.OperationCallback(){
 TalkieManager.setNotificationListener(new TalkieClient.NotificationListener(){
       /**
        * 停止说话时回调
-       * @param state   0 手动停止
-       * 		1 被更高的请求发言的权限打断
-       * 		2 服务端一段时间未收到语音包 强制打断
-       * 		3 发言时长达到最大值 服务端强制打断
-       * 		4 抢麦后一段时间未发送语音包到服务端 自动停止
-       * 		5 发言中 打电话或来电 强制打断
-       * 		6 网络不稳定 与服务端连接断开时 强制打断
+       * @param type 参照StopSpeakType枚举
        */
       @Override
-      public void onStopSpeak(int state) {
+      public void onStopSpeak(StopSpeakType type) {
 
       }
 	  /**
        * 自己的角色被改变时回调
        */
-      public void onRoleChange(int role){
+      public void onRoleChange(RoomRole role){
 
       }
 	  /**
@@ -460,7 +459,7 @@ TalkieManager.setBroadcastListener(new TalkieClient.BroadcastListener(){
        * 其他用户角色改变时
        */
       @Override
-      public void onRoleChange(String openid, int role) {
+      public void onRoleChange(String openid, RoomRole role) {
 
       }
 	  /**
@@ -599,3 +598,101 @@ TalkieManager.oauth(openId, token, new TalkieClient.OperationCallback(){
 
       })
 ```
+
+<h2 id="类说明">四、类说明</h2>
+
+
+<h3>实体类</h3>
+
+1、房间信息
+```java
+public class RoomInfo {
+	private String id; 			//唯一标识
+
+	private String name; 			//名称
+
+	private int onlineSize; 		//在线人数
+
+	private int totalSize; 			//总人数
+
+	private boolean locationSharing;	//位置共享开关状态
+}
+```
+2、用户信息
+```java
+public class UserInfo {
+	private String id;			//唯一标识
+
+	private RoomRole role;			//角色
+
+	private boolean isOnline;		//是否在线
+
+	private Permission permission;		//权限
+
+	private boolean isSelf;			//是否是自己
+}
+```
+
+<h3>枚举</h3>
+
+1、房间角色
+```java
+public enum RoomRole {
+	OWNER,					//群主
+	
+	ADMINISTRATOR,				//管理员
+	
+	GENERAL_MEMBER				//普通成员
+}
+```
+2、发言状态
+```java
+public enum MicrophoneState {
+	ERROR,                      		//错误(检查是否配置了ImService)
+
+	LEISURE,                     		//空闲
+
+	REQUEST_SPEAKING,            		//正在请求发言中
+
+	SELF_SPEAKING,               		//自己正在发言
+
+	MEMBER_SPEAKING             		//其他人员正在发言
+}
+```
+3、 停止说话类型
+```java
+public enum StopSpeakType {
+	BY_HAND,                                 //手动停止
+
+	BY_HIGHER_PERMISSION,                    //更高的请求发言的权限打断
+
+	BY_SERVER_NO_RECEIVER_AUDIO,             //服务端一段时间未收到语音包 强制打断
+
+	BY_SPEAK_TIME_OUT,                       //发言时长达到最大值 服务端强制打断
+
+	BY_AUTO,                                 //抢麦后一段时间未发送语音包到服务端 自动停止
+
+	BY_PHONE,                                //发言中 打电话或来电 强制打断
+
+	BY_NETWORK                               //网络不稳定 与服务端连接断开时 强制打断
+}
+```
+
+<h3>其他</h3>
+1、用户权限说明
+```java
+public class Permission {
+    public boolean allowSpeak();			//允许发言
+
+    public boolean allowEditRoomName();			//允许编辑群名
+
+    public boolean allowKickRoomUser();			//允许踢出群内成员
+
+    public boolean allowSilencedRoomUser();		//允许禁言群内用户
+
+    public boolean allowUnSilencedRoomUser();		//允许恢复群内被禁言用户
+
+    public boolean allowChangeRole();			//允许修改角色
+}
+```
+
