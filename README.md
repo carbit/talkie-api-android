@@ -677,7 +677,7 @@ public enum StopSpeakType {
 
 	BY_SPEAK_TIME_OUT,                       //发言时长达到最大值 服务端强制打断
 
-	BY_AUTO,                                 //抢麦3秒无发言自动丢麦
+	BY_AUTO,                                 //抢麦3秒无发言自动丢麦(群主除外)
 
 	BY_PHONE,                                //发言中 打电话或来电 强制打断
 
