@@ -669,7 +669,7 @@ public enum MicrophoneState {
 3、 停止说话类型
 ```java
 public enum StopSpeakType {
-	BY_HAND,                                 //手动停止
+	BY_HAND,                                 //手动丢麦
 
 	BY_HIGHER_PERMISSION,                    //更高的请求发言的权限打断
 
@@ -677,7 +677,7 @@ public enum StopSpeakType {
 
 	BY_SPEAK_TIME_OUT,                       //发言时长达到最大值 服务端强制打断
 
-	BY_AUTO,                                 //抢麦后一段时间未发送语音包到服务端 自动停止
+	BY_AUTO,                                 //抢麦3秒无发言自动丢麦
 
 	BY_PHONE,                                //发言中 打电话或来电 强制打断
 
