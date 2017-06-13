@@ -402,19 +402,19 @@ TalkieManager.setSelfEventListener(new TalkieClient.SelfEventListener(){
       public void onRoomSizeChange(int onlineSize, int totalSize) {
 
       }
-	  /**
+      /**
        * 自己的角色被改变时回调
        */
       public void onRoleChange(RoomRole role){
 
       }
-	  /**
+      /**
        * 自己被踢出当前房间时回调
        */
-      public void onKiecedOut(){
+      public void onKickedOut(){
 
       }
-	  /**
+      /**
        * 自己被禁言时回调
        */
       public void onSilenced(int hour){
@@ -426,7 +426,7 @@ TalkieManager.setSelfEventListener(new TalkieClient.SelfEventListener(){
       public void onUnSilenced(){
 
       }
-      	  /**
+      /**
        * 对讲服务断开后回调 表示自己离线
        */
       public void onTalkieServerDisconnected(){
@@ -452,7 +452,6 @@ TalkieManager.MemberEventListener(new TalkieClient.MemberEventListener(){
       public void onMemberStartSpeak(String openid) {
 
       }
-
       /**
        * 其它用户结束发言事件
        * @param openid 授权用户唯一标识
@@ -481,7 +480,7 @@ TalkieManager.MemberEventListener(new TalkieClient.MemberEventListener(){
       public void onMemberRoleChange(String openid, RoomRole role) {
 
       }
-	  /**
+      /**
        * 其他用户上线时
        */
       @Override
