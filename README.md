@@ -384,9 +384,9 @@ TalkieManager.unSilenced(roomId, openId, new TalkieClient.OperationCallback(){
 });
 ```
 
-28、设置通知事件 （通知只对自己）
+28、设置自己的事件监听 （只对自己）
 ```java
-TalkieManager.setNotificationListener(new TalkieClient.NotificationListener(){
+TalkieManager.setSelfEventListener(new TalkieClient.SelfEventListener(){
       /**
        * 停止说话时回调
        * @param type 参照StopSpeakType枚举
@@ -411,7 +411,7 @@ TalkieManager.setNotificationListener(new TalkieClient.NotificationListener(){
 	  /**
        * 自己被踢出当前房间时回调
        */
-      public void onSelfKicked(){
+      public void onKiecedOut(){
 
       }
 	  /**
@@ -426,18 +426,30 @@ TalkieManager.setNotificationListener(new TalkieClient.NotificationListener(){
       public void onUnSilenced(){
 
       }
+      	  /**
+       * 对讲服务断开后回调 表示自己离线
+       */
+      public void onTalkieServerDisconnected(){
+
+      }
+      /**
+       * 对讲服务连接后回调 表示在线
+       */
+      public void onTalkieServerConnected(){
+
+      }
 });
 ```
 
-29、 设置广播事件（广播对所有人 除了自己）
+29、 设置其他成员事件监听（其他成员的操作事件）
 ```java
-TalkieManager.setBroadcastListener(new TalkieClient.BroadcastListener(){
+TalkieManager.MemberEventListener(new TalkieClient.MemberEventListener(){
       /**
        * 其它用户开始发言事件
        * @param openid 授权用户唯一标识
        */
       @Override
-      public void onStartSpeak(String openid) {
+      public void onMemberStartSpeak(String openid) {
 
       }
 
@@ -446,7 +458,7 @@ TalkieManager.setBroadcastListener(new TalkieClient.BroadcastListener(){
        * @param openid 授权用户唯一标识
        */
       @Override
-      public void onStopSpeak(String openid) {
+      public void onMemberStopSpeak(String openid) {
 
       }
 
@@ -459,14 +471,14 @@ TalkieManager.setBroadcastListener(new TalkieClient.BroadcastListener(){
        * @param direction 方向
        */
       @Override
-      public void onLocationChange(String openid, float lat, float lon, int speed, int direction) {
+      public void onMemberLocationChange(String openid, float lat, float lon, int speed, int direction) {
 
       }
       /**
        * 其他用户角色改变时
        */
       @Override
-      public void onRoleChange(String openid, RoomRole role) {
+      public void onMemberRoleChange(String openid, RoomRole role) {
 
       }
 	  /**
@@ -494,14 +506,14 @@ TalkieManager.setBroadcastListener(new TalkieClient.BroadcastListener(){
        * 其他用户更改房间名称时
        */
       @Override
-      public void onRoomNameChange(String openid, String roomName) {
+      public void onMemberChangeRoomName(String openid, String roomName) {
 
       }
       /**
        * 其他用户更改自己人位置共享开关时
        */
       @Override
-      public void onLocationSharingChange(String openid, String isLocationSharing) {
+      public void onMemberLocationSharingChange(String openid, String isLocationSharing) {
 
       }
 });
@@ -623,6 +635,8 @@ public class RoomInfo {
 	private int totalSize; 			//总人数
 
 	private boolean locationSharing;	//位置共享开关状态
+	
+	private UserInfo self;			//自己的数据
 }
 ```
 2、用户信息
@@ -681,7 +695,7 @@ public enum StopSpeakType {
 
 	BY_PHONE,                                //发言中 打电话或来电 强制打断
 
-	BY_NETWORK                               //网络不稳定 与服务端连接断开时 强制打断
+	BY_SOCKET_SERVER_DISCONNECT              //网络不稳定时 Socket服务断开时 强制打断
 }
 ```
 
