@@ -396,13 +396,6 @@ TalkieManager.setSelfEventListener(new TalkieClient.SelfEventListener(){
 
       }
       /**
-       * 房间人数改变回调
-       */
-      @Override
-      public void onRoomSizeChange(int onlineSize, int totalSize) {
-
-      }
-      /**
        * 自己的角色被改变时回调
        */
       public void onRoleChange(RoomRole role){
@@ -427,15 +420,16 @@ TalkieManager.setSelfEventListener(new TalkieClient.SelfEventListener(){
 
       }
       /**
-       * 对讲服务断开后回调 表示自己离线
+       * 对讲服务连接成功后回调 表示可以正常收听语音消息
        */
-      public void onTalkieServerDisconnected(){
+      public void onTalkieServerConnected(int onlineSize, int totalSize){
 
       }
       /**
-       * 对讲服务连接后回调 表示在线
+       * 对讲服务断开后回调 表示自己已离线（无法收听语音消息） 
+       * 如果是offline或logout或登录冲突则不会自动连接 需手动执行online操作才能再次连接
        */
-      public void onTalkieServerConnected(){
+      public void onTalkieServerDisconnected(){
 
       }
 });
