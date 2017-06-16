@@ -525,7 +525,7 @@ Server授权整体流程：
 
 第三方Server访问如下链接：
 
-https://open.carbit.com.cn/talkie/oauth2/connect?projectid=PROJECTID&callback_url=CALLBACK_URL&response_type=code&scope=SCOPE&state=STATE
+https://openapi.carbit.com.cn/talkie/oauth2/connect?projectid=PROJECTID&callback_url=CALLBACK_URL&response_type=code&scope=SCOPE&state=STATE
 
 * 参数说明
 
@@ -552,7 +552,7 @@ https://open.carbit.com.cn/talkie/oauth2/connect?projectid=PROJECTID&callback_ur
 
 第三方Server访问如下链接：
 
-https://open.carbit.com.cn/talkie/oauth2/login?projectid=PROJECTID&secret=SECRET&code=CODE&userid=USERIDgrant_type=authorization_code
+https://openapi.carbit.com.cn/talkie/oauth2/login?projectid=PROJECTID&secret=SECRET&code=CODE&userid=USERIDgrant_type=authorization_code
 
 * 参数说明
 
