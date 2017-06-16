@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.2'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
     defaultConfig {
         applicationId "net.easyconn.sdk.talkie.demo"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -14,7 +14,6 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-
         }
     }
 }
@@ -25,10 +24,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:design:23.0.1'
     testCompile 'junit:junit:4.12'
-    compile files('libs/TalkieSdk_1.2.jar')
     compile('io.socket:socket.io-client:0.7.0') {
         exclude group: 'org.json', module: 'json'
     }
     compile 'com.squareup.okhttp:okhttp:+'
+    compile files('libs/talkie_sdk_v2.0.0.jar')
 }

@@ -1,213 +1,436 @@
 package net.easyconn.sdk.talkie.demo;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import net.easyconn.talkie.sdk.TalkieClient;
 import net.easyconn.talkie.sdk.TalkieManager;
-import net.easyconn.talkie.utils.SpUtil;
+import net.easyconn.talkie.sdk.bean.GlobalSetting;
+import net.easyconn.talkie.sdk.bean.RoomInfo;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView txRegist = null;
-    private TextView txOnline = null;
-    private EditText mIdEditText;
-    private TextView txReqSpeak = null;
-    private TextView txStopSpeak = null;
-    private TextView txOtherSpeak = null;
-    private EditText edRegist = null;
-    private boolean isClickStop = false;
+    private Toolbar vToolbar;
 
-    private TextView mTvLocation;
+    private CheckBox vGlobalMute;
 
-    private float volume = 1.0F;
+    private ListView vListView;
+
+    private Adapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-
-        TalkieManager.init(this);
+        setContentView(R.layout.activity_test);
 
         initView();
+        initListener();
 
+        mAdapter = new Adapter();
+        vListView.setAdapter(mAdapter);
+
+        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+        startActivityForResult(intent, 1000);
+    }
+
+    private void initGlobalSetting() {
+        TalkieManager.getGlobalSetting(new TalkieClient.ResultCallback<GlobalSetting>() {
+            @Override
+            public void onResult(GlobalSetting globalSetting) {
+                toast("获取全局设置成功");
+
+                vGlobalMute.setOnCheckedChangeListener(null);
+                vGlobalMute.setChecked(globalSetting.isGlobalMute());
+                vGlobalMute.setEnabled(true);
+                vGlobalMute.setOnCheckedChangeListener(mGlobalMuteCheckedChangeListener);
+            }
+
+            @Override
+            public void onError(int errorCode, String errorMsg) {
+                toastError("获取全局设置失败", errorCode, errorMsg);
+            }
+        });
     }
 
     private void initView() {
-        txRegist = (TextView) findViewById(R.id.tx_regist);
-        txOnline = (TextView) findViewById(R.id.tx_online);
-        mIdEditText = (EditText) findViewById(R.id.ed_id);
-        txReqSpeak = (TextView) findViewById(R.id.tx_req_speak);
-        txStopSpeak = (TextView) findViewById(R.id.tx_stop_speak);
-        txOtherSpeak = (TextView) findViewById(R.id.tx_other_speak);
-        edRegist = (EditText) findViewById(R.id.ed_regist);
-        mTvLocation = (TextView) findViewById(R.id.tv_location);
+        vGlobalMute = (CheckBox) findViewById(R.id.cb_global_mute);
+        vListView = (ListView) findViewById(R.id.list_view);
+        vToolbar = (Toolbar) findViewById(R.id.tool_bar);
+        setSupportActionBar(vToolbar);
+    }
 
-        findViewById(R.id.regist).setOnClickListener(new View.OnClickListener() {
+    private void initListener() {
+        vListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                TalkieManager.login("2323123", edRegist.getText().toString().trim(), new TalkieClient.ConnectCallback() {
-                    @Override
-                    public void onSuccess(String openid) {
-                        showToast("登录成功");
-                        txRegist.setText(openid);
-                        findViewById(R.id.regist).setEnabled(false);
-                    }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Object adapter = parent.getAdapter();
+                if (adapter != null && adapter instanceof Adapter) {
+                    final Object item = ((Adapter) adapter).getItem(position);
+                    if (item != null && item instanceof RoomInfo) {
+                        //加入自己的一个群
+                        TalkieManager.online(((RoomInfo) item).getId(), new TalkieClient.ResultCallback<RoomInfo>() {
+                            @Override
+                            public void onResult(RoomInfo room) {
+                                toast("上线成功");
 
-                    @Override
-                    public void onError(int errorCode, String errorMsg) {
-                        showToast("登录失败，errorCode： " + errorCode);
-                    }
+                                Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                                intent.putExtra("ROOM", room);
+                                startActivityForResult(intent, 1000);
+                            }
 
-                });
-            }
-        });
-        findViewById(R.id.online).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String id = mIdEditText.getText().toString().trim();
-                if (TextUtils.isEmpty(id)) {
-                    showToast("id不能为空");
-                    return;
+                            @Override
+                            public void onError(int errorCode, String errorMsg) {
+                                toastError("上线失败", errorCode, errorMsg);
+                            }
+                        });
+                    }
                 }
-                if (!id.matches("\\d{1,5}")) {
-                    showToast("id必须为5位内数字");
-                    return;
-                }
-
-                TalkieManager.online(id, new TalkieClient.OnlineCallback() {
-                    @Override
-                    public void onSuccess() {
-                        showToast("加入成功");
-                        txOnline.setText("加入成功");
-
-                        InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                        manager.hideSoftInputFromWindow(mIdEditText.getWindowToken(), 0);
-                    }
-
-                    @Override
-                    public void onError(int errorCode, String errorMsg) {
-                        txReqSpeak.setText("加入失败，errorCode： " + errorCode);
-                    }
-
-                });
             }
         });
-
-        findViewById(R.id.req_speak).setOnClickListener(new View.OnClickListener() {
+        vToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
-            public void onClick(View v) {
-                TalkieManager.reqSpeak(new TalkieClient.ReqSpeakCallback() {
-                    @Override
-                    public void onSuccess() {
-                        showToast("抢麦成功");
-                        txReqSpeak.setText("抢麦成功，请说话！");
-                    }
-
-                    @Override
-                    public void onError(int errorCode, String errorMsg) {
-                        txReqSpeak.setText("抢麦失败，errorCode： " + errorCode);
-                    }
-                });
-            }
-        });
-
-        findViewById(R.id.stop_speak).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TalkieManager.stopSpeak();
-//                txReqSpeak.setText("手动丢麦");
-//                isClickStop = true;
-            }
-        });
-
-        TalkieManager.setOtherStartSpeakListener(new TalkieClient.StartSpeakListener() {
-            @Override
-            public void onStartSpeak(String openid) {
-                txOtherSpeak.setText(openid+" -> 抢麦 ");
-            }
-        });
-
-        TalkieManager.setOtherStopSpeakListener(new TalkieClient.StopSpeakListener() {
-            @Override
-            public void onStopSpeak() {
-                txOtherSpeak.setText("");
-            }
-        });
-
-        TalkieManager.setStopSpeakNtfListener(new TalkieClient.StopSpeakNtfListener() {
-            @Override
-            public void onStopSpeakNtfListener(int state) {
-                switch (state) {
-                    case TalkieClient.StopSpeakNtfListener.STOP_HAND:
-                        txReqSpeak.setText("手动丢麦");
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_global_setting:
+                        initGlobalSetting();
                         break;
-                    case TalkieClient.StopSpeakNtfListener.STOP_AUTO:
-                        txReqSpeak.setText("自动丢麦");
+                    case R.id.menu_start_polling:
+                        initTalkie();
                         break;
-                    case TalkieClient.StopSpeakNtfListener.STOP_SERVER:
-                        txReqSpeak.setText("抢麦超过30秒 服务器通知丢麦");
+                    case R.id.menu_stop_polling:
+                        TalkieManager.stopRoomListPolling();
                         break;
-                    case TalkieClient.StopSpeakNtfListener.STOP_PHONE:
-                        txReqSpeak.setText("来电（去电）状态丢麦");
+                    case R.id.menu_create:
+                        showCreateDialog();
                         break;
-                    case TalkieClient.StopSpeakNtfListener.STOP_NETWORK:
-                        txReqSpeak.setText("网络断开 丢麦");
+                    case R.id.menu_join:
+                        showJoinDialog();
                         break;
                     default:
                         break;
                 }
+                return true;
+            }
+        });
+        vGlobalMute.setOnCheckedChangeListener(mGlobalMuteCheckedChangeListener);
+    }
 
-//                isClickStop = false;
-            }
-        });
+    private boolean isRequesting;
 
-        findViewById(R.id.btn_location).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                TalkieManager.location(30.574305D, 114.286212D, 10, 30);
-                mTvLocation.setText("位置上报 纬度:30.574305 经度:114.286212");
+    private CompoundButton.OnCheckedChangeListener mGlobalMuteCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+            if (isRequesting) {
+                return;
             }
-        });
+            isRequesting = true;
+            TalkieManager.setGlobalMute(isChecked, new TalkieClient.OperationCallback() {
+                @Override
+                public void onSuccess() {
+                    toast("设置静音操作成功");
 
-        TalkieManager.setOtherLocationListener(new TalkieClient.LocationListener() {
-            @Override
-            public void onLocationListener(String openid, double lat, double lon, int speed, int direction) {
-                mTvLocation.setText(String.format("%s位置变更纬度:%s 经度:%s", openid, lat, lon));
-            }
-        });
+                    vGlobalMute.setOnCheckedChangeListener(null);
+                    vGlobalMute.setChecked(isChecked);
+                    vGlobalMute.setEnabled(true);
+                    vGlobalMute.setOnCheckedChangeListener(mGlobalMuteCheckedChangeListener);
+                    isRequesting = false;
+                }
 
-        findViewById(R.id.volume_add).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onError(int errorCode, String errorMsg) {
+                    toastError("设置静音操作失败", errorCode, errorMsg);
+
+                    vGlobalMute.setOnCheckedChangeListener(null);
+                    vGlobalMute.setChecked(!isChecked);
+                    vGlobalMute.setEnabled(true);
+                    vGlobalMute.setOnCheckedChangeListener(mGlobalMuteCheckedChangeListener);
+                    isRequesting = false;
+                }
+            });
+        }
+    };
+
+    private void showCreateDialog() {
+        final InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        View content = LayoutInflater.from(this).inflate(R.layout.dialog_create_content_view, null);
+        final EditText editText = (EditText) content.findViewById(R.id.edit_text);
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("请输入群名称")
+                .setIcon(R.mipmap.ic_launcher)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final String name = editText.getText().toString().trim();
+                        if (TextUtils.isEmpty(name)) {
+                            ToastUtil.show(MainActivity.this, "名称不能为空");
+                            return;
+                        }
+                        manager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                        TalkieManager.create(name, new TalkieClient.ResultCallback<RoomInfo>() {
+                            @Override
+                            public void onResult(RoomInfo room) {
+                                toast("创建成功");
+
+                                Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                                intent.putExtra("ROOM", room);
+                                startActivityForResult(intent, 1000);
+
+                                if (mAdapter != null) {
+                                    mAdapter.addRoom(room);
+                                    mAdapter.notifyDataSetChanged();
+                                }
+                            }
+
+                            @Override
+                            public void onError(int errorCode, String errorMsg) {
+                                toastError("创建失败", errorCode, errorMsg);
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        manager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                    }
+                })
+                .setView(content).create();
+        dialog.show();
+        editText.requestFocus();
+        editText.post(new Runnable() {
             @Override
-            public void onClick(View v) {
-                volume = volume + 0.05F;
-                TalkieManager.setTalkieVolume(volume);
+            public void run() {
+                manager.showSoftInput(editText, 0);
             }
         });
-        findViewById(R.id.volume_minus).setOnClickListener(new View.OnClickListener() {
+    }
+
+    private void showJoinDialog() {
+        final InputMethodManager manager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        View content = LayoutInflater.from(this).inflate(R.layout.dialog_join_content_view, null);
+        final EditText editText = (EditText) content.findViewById(R.id.edit_text);
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle("请输入群口令")
+                .setIcon(R.mipmap.ic_launcher)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        final String id = editText.getText().toString().trim();
+                        if (TextUtils.isEmpty(id)) {
+                            ToastUtil.show(MainActivity.this, "id不能为空");
+                            return;
+                        }
+                        if (!id.matches("\\d{1,8}")) {
+                            ToastUtil.show(MainActivity.this, "id必须为8位内数字");
+                            return;
+                        }
+                        manager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                        TalkieManager.online(id, new TalkieClient.ResultCallback<RoomInfo>() {
+                            @Override
+                            public void onResult(RoomInfo room) {
+                                toast("上线成功");
+
+                                Intent intent = new Intent(MainActivity.this, InfoActivity.class);
+                                intent.putExtra("ROOM", room);
+                                startActivityForResult(intent, 1000);
+                            }
+
+                            @Override
+                            public void onError(int errorCode, String errorMsg) {
+                                toastError("上线失败", errorCode, errorMsg);
+                            }
+                        });
+                    }
+                })
+                .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        manager.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+                    }
+                })
+                .setView(content).create();
+        dialog.show();
+        editText.requestFocus();
+        editText.post(new Runnable() {
             @Override
-            public void onClick(View v) {
-                volume = volume - 0.05F;
-                TalkieManager.setTalkieVolume(volume);
+            public void run() {
+                manager.showSoftInput(editText, 0);
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1000) {
+            if (resultCode == 1002) {
+                if (data != null) {
+                    String type = data.getStringExtra("TYPE");
+                    if (type.equals("LOGOUT")) {
+                        mAdapter.setRooms(null);
+                        mAdapter.notifyDataSetChanged();
+
+                        vGlobalMute.setOnCheckedChangeListener(null);
+                        vGlobalMute.setChecked(false);
+                        vGlobalMute.setEnabled(false);
+                        vGlobalMute.setOnCheckedChangeListener(mGlobalMuteCheckedChangeListener);
+
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        startActivityForResult(intent, 1000);
+                    } else if (type.equals("LEAVE")) {
+                        RoomInfo room = data.getParcelableExtra("ROOM");
+                        if (room != null) {
+                            mAdapter.removeRoom(room);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                }
+            } else if (resultCode == 1003) {
+                finish();
+                System.exit(0);
+            }
+        }
+    }
+
+    private void initTalkie() {
+        //请求群列表
+        TalkieManager.startRoomListPolling(10000, new TalkieClient.ResultCallback<List<RoomInfo>>() {
+            @Override
+            public void onResult(List<RoomInfo> rooms) {
+                toast("群列表获取成功");
+
+                //显示列表
+                mAdapter.setRooms(rooms);
+                mAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onError(int errorCode, String errorMsg) {
+                toastError("群列表获取失败", errorCode, errorMsg);
+            }
+        });
+    }
+
+    private class Adapter extends BaseAdapter {
+
+        private List<RoomInfo> mRooms;
+
+        void setRooms(List<RoomInfo> rooms) {
+            this.mRooms = rooms;
+        }
+
+        void addRoom(RoomInfo info) {
+            if (mRooms == null) {
+                mRooms = new ArrayList<>();
+            }
+            if (!mRooms.contains(info)) {
+                mRooms.add(info);
+            }
+        }
+
+        void removeRoom(RoomInfo room) {
+            if (mRooms != null) {
+                mRooms.remove(room);
+            }
+        }
+
+        @Override
+        public int getCount() {
+            if (mRooms != null) {
+                return mRooms.size();
+            }
+            return 0;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mRooms.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder viewHolder;
+            if (convertView == null) {
+                convertView = LayoutInflater.from(MainActivity.this).inflate(R.layout.item_rooms, parent, false);
+                TextView name = (TextView) convertView.findViewById(R.id.tv_name);
+                TextView order = (TextView) convertView.findViewById(R.id.tv_order);
+                TextView size = (TextView) convertView.findViewById(R.id.tv_size);
+                viewHolder = new ViewHolder();
+                viewHolder.vName = name;
+                viewHolder.vOrder = order;
+                viewHolder.vSize = size;
+                convertView.setTag(viewHolder);
+            } else {
+                viewHolder = (ViewHolder) convertView.getTag();
+            }
+            RoomInfo room = mRooms.get(position);
+            viewHolder.vName.setText(room.getName());
+            viewHolder.vOrder.setText(String.format("口令:%s", room.getId()));
+            viewHolder.vSize.setText(String.format("%s/%s", room.getOnlineSize(), room.getTotalSize()));
+
+            return convertView;
+        }
+
+        private class ViewHolder {
+            TextView vName;
+            TextView vOrder;
+            TextView vSize;
+        }
     }
 
     @Override
     protected void onDestroy() {
         TalkieManager.destroy();
-
         super.onDestroy();
     }
 
-    private void showToast(String message) {
-        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+        System.exit(0);
     }
+
+    private void toast(String msg) {
+        ToastUtil.show(MainActivity.this, msg);
+    }
+
+    private void toastError(String action, int errorCode, String msg) {
+        ToastUtil.show(MainActivity.this, action + " errorCode:" + errorCode + " msg:" + msg);
+    }
+
 }

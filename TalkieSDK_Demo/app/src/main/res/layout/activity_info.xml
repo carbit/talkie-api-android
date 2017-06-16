@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:padding="8dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="请确认已经开启录音相关权限\n并且没有其它APP占用麦克风"
+        android:textColor="@android:color/holo_red_light"
+        android:textSize="12sp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="个人ID:"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_open_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:text="角色:"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_role"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:text="对讲服务状态:"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/tv_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="连接"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="房间ID:"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_room_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:text="人数->在线:"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_online"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="8dp"
+            android:text="总数:"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_total"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="名称："
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"/>
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="160dp"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/btn_change_name"
+            style="@style/ThemeButton"
+            android:text="修改"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="广播："
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_broadcast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="通知："
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_notification"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="喊话状态："
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_member_speak"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:padding="4dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="抢麦状态："
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"/>
+
+        <TextView
+            android:id="@+id/tv_speak_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <net.easyconn.sdk.talkie.demo.TalkieActionView
+        android:id="@+id/talkie_action_view"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:background="@drawable/background_speak"
+        android:padding="4dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/volume_add"
+            style="@style/ThemeButton"
+            android:layout_margin="4dp"
+            android:text="音量+5"/>
+
+        <Button
+            android:id="@+id/volume_minus"
+            style="@style/ThemeButton"
+            android:layout_margin="4dp"
+            android:text="音量-5"/>
+
+        <Button
+            android:id="@+id/btn_room_info"
+            style="@style/ThemeButton"
+            android:layout_margin="4dp"
+            android:text="获取房间信息"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_location"
+            style="@style/ThemeButton"
+            android:layout_margin="4dp"
+            android:text="位置上报"/>
+
+        <TextView
+            android:id="@+id/tv_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            android:textSize="12sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_offline"
+            style="@style/ThemeButton"
+            android:layout_margin="4dp"
+            android:text="离线"/>
+
+        <Button
+            android:id="@+id/btn_leave"
+            style="@style/ThemeButton"
+            android:layout_margin="4dp"
+            android:text="退出房间"/>
+
+        <Button
+            android:id="@+id/btn_logout"
+            style="@style/ThemeButton"
+            android:layout_margin="4dp"
+            android:text="退出登录"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <CheckBox
+            android:id="@+id/cb_location_sharing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp"
+            android:text="位置共享"
+            android:textSize="16sp"/>
+
+        <Button
+            android:id="@+id/btn_user_list"
+            style="@style/ThemeButton"
+            android:layout_margin="4dp"
+            android:text="群成员"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

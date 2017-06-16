@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="net.easyconn.sdk.talkie.demo.LoginActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:text="首次进入"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"/>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/input_edit_text"
+            android:layout_width="match_parent"
+            android:padding="4dp"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/ed_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入客户端用户唯一id"
+                android:imeOptions="flagNoExtractUi"/>
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="登录"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="8dp"
+            android:text="二次进入"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/tv_open_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tv_token"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="4dp"
+            android:textColor="@android:color/black"
+            android:textSize="14sp"/>
+
+        <Button
+            android:id="@+id/btn_oauth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="授权"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+</LinearLayout>
