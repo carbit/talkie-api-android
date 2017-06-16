@@ -9,6 +9,8 @@
 
 [三、Server授权](#Server授权)
 
+[四、类说明](#类说明)
+
 ------------------
 
 <h2 id="配置开发环境">一、配置开发环境</h2>
@@ -64,15 +66,14 @@ TalkieManager.setHttpTimeOut(long connectTime, long readTime);
  * @param userid(String) 业务系统中的用户唯一标识
  */
 TalkieManager.login(appSecret, userid, new TalkieClient.ConnectCallback(){
-      @Override
-      public void onSuccess(String openId, String token) {
+	@Override
+	public void onSuccess(String openId, String token) {
 
-      }
-      @Override
-      public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-      }
-    }
+	}
 })
 ```
 **Tips：**
@@ -90,15 +91,15 @@ TalkieManager.logout()
 6、获取全局设置 （包含全局静音设置）
 ```java
 TalkieManager.getGlobalSetting(new TalkieClient.ResultCallback<GlobalSetting>() {
-            @Override
-            public void onResult(GlobalSetting globalSetting) {
+	@Override
+	public void onResult(GlobalSetting globalSetting) {
 
-            }
-            @Override
-            public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-            }
-        });
+	}
+});
 ```
 
 7、创建频道
@@ -106,15 +107,15 @@ TalkieManager.getGlobalSetting(new TalkieClient.ResultCallback<GlobalSetting>() 
 /**
  * @param name(String)    频道名称
  */
-    TalkieManager.create(name, new TalkieClient.ResultCallback<RoomInfo>(){
-      @Override
-      public void onResult(RoomInfo room) {
+TalkieManager.create(name, new TalkieClient.ResultCallback<RoomInfo>(){
+	@Override
+	public void onResult(RoomInfo room) {
 
-      }
-      @Override
-      public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-      }
+	}
 })
 ```
 
@@ -124,14 +125,14 @@ TalkieManager.getGlobalSetting(new TalkieClient.ResultCallback<GlobalSetting>() 
  * @param roomId(String)  频道ID
  */
 TalkieManager.leave(roomId, new TalkieClient.OperationCallback(){
-      @Override
-      public void onSuccess() {
+	@Override
+	public void onSuccess() {
 
-      }
-      @Override
-      public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-      }
+	}
 })
 ```
 
@@ -141,14 +142,14 @@ TalkieManager.leave(roomId, new TalkieClient.OperationCallback(){
  * @param interval(int)  轮询间隔，单位秒，但不能小于服务器配置(5秒)
  */
 TalkieManager.startRoomListPolling(interval, new TalkieClient.ResultCallback<List<RoomInfo>>(){
-      @Override
-            public void onResult(<List<RoomInfo>> rooms) {
+	@Override
+	public void onResult(<List<RoomInfo>> rooms) {
 
-            }
-            @Override
-            public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-            }
+	}
 });
 ```
 
@@ -163,14 +164,14 @@ TalkieManager.stopRoomListPolling();
  * @param roomId(String)  频道ID
  */
 TalkieManager.online(roomId, new TalkieClient.ResultCallback<RoomInfo>(){
-      @Override
-      public void onResult(RoomInfo room) {
+	@Override
+	public void onResult(RoomInfo room) {
 
-      }
-      @Override
-      public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-      }
+	}
 })
 ```
 **Tips：只有进入频道后才能请求发言、更新位置、收到其它用户的发言和位置**
@@ -187,13 +188,13 @@ TalkieManager.offline();
  * @param roomId(String)  频道ID
  */
 TalkieManager.getRoomInfo(roomId, new TalkieClient.ResultCallback<RoomInfo>(){
-      public void onResult(RoomInfo room){
+	public void onResult(RoomInfo room){
 
-      }
-      @Override
-      public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-      }
+	}
 })
 ```
 
@@ -205,30 +206,30 @@ TalkieManager.getRoomInfo(roomId, new TalkieClient.ResultCallback<RoomInfo>(){
  * @param size(int) 每页的数量
  */
 TalkieManager.getUserList(roomId, page, size, new TalkieClient.PageResultCallback<List<UserInfo>>(){
-     /**
-      * @param users 成员数据
-      * @param total 总数量
-      */
-      public void onResult(List<UserInfo> users, int total){
+	/**
+	* @param users 成员数据
+	* @param total 总数量
+	*/
+	public void onResult(List<UserInfo> users, int total){
 
-      }
-      @Override
-      public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-      }
+	}
 })
 ```
 
 15、获得成员信息和设置
 ```java
 TalkieManager.getUserInfo(roomId, openId, new TalkieClient.ResultCallback<UserInfo>(){
-      public void onResult(UserInfo userInfo){
+	public void onResult(UserInfo userInfo){
 
-      }
-       @Override
-      public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-      }
+	}
 })
 ```
 
@@ -240,24 +241,24 @@ TalkieManager.getSpeakState();
 17、 请求发言
 ```java
 TalkieManager.reqSpeak(new TalkieClient.ReqSpeakCallback(){
-	 /**
-       * 准备开始请求发言 状态回调（请求中）
-       */
-      @Override
-      public void onReady() {
+	/**
+	* 准备开始请求发言 状态回调（请求中）
+	*/
+	@Override
+	public void onReady() {
 
-      }
-      /**
-       * 请求发言成功 （发言中）
-       */
-      @Override
-      public void onSuccess() {
+	}
+	/**
+	* 请求发言成功 （发言中）
+	*/
+	@Override
+	public void onSuccess() {
 
-      }
-      @Override
-      public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-      }
+	}
     });
 ```
 
@@ -285,131 +286,128 @@ TalkieManager.setTalkieVolume(volume);
 21、修改房间名称
 ```java
 TalkieManager.setRoomName(roomId, name, new TalkieClient.OperationCallback(){
-	  @Override
-      public void onSuccess() {
+	@Override
+	public void onSuccess() {
 
-      }
-      @Override
-      public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-      }
+	}
 });
 ```
 
 22、设置全局静音设置
 ```java
 TalkieManager.setGlobalMute(isGlobalMute, new TalkieClient.OperationCallback(){
-	  @Override
-      public void onSuccess() {
+	@Override
+	public void onSuccess() {
 
-      }
-      @Override
-      public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-      }
+	}
 });
 ```
 
 23、位置共享开关
 ```java
 TalkieManager.setLocationSharing(roomId, isSharing, new TalkieClient.OperationCallback(){
-	  @Override
-      public void onSuccess() {
+	@Override
+	public void onSuccess() {
 
-      }
-      @Override
-      public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-      }
+	}
 });
 ```
 
 24、设置房间管理角色
 ```java
+/**
+* @param role 角色 参照RoomRole枚举
+*/
 TalkieManager.setRoomRole(roomId, openId, role, new TalkieClient.OperationCallback(){
-	  @Override
-      public void onSuccess() {
+	@Override
+	public void onSuccess() {
 
-      }
-      @Override
-      public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-      }
+	}
 });
 ```
 
 25、踢人
 ```java
 TalkieManager.kickUser(roomId, openId, hour, new TalkieClient.OperationCallback(){
-	  @Override
-      public void onSuccess() {
+	@Override
+	public void onSuccess() {
 
-      }
-      @Override
-      public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-      }
+	}
 });
 ```
 
 26、禁言
 ```java
 TalkieManager.silenced(roomId, openId, hour, new TalkieClient.OperationCallback(){
-	  @Override
-      public void onSuccess() {
+	@Override
+	public void onSuccess() {
 
-      }
-      @Override
-      public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-      }
+	}
 });
 ```
 
-27、取消禁言
+27、取消禁言（暂未实现）
 ```java
 TalkieManager.unSilenced(roomId, openId, new TalkieClient.OperationCallback(){
-	  @Override
-      public void onSuccess() {
+	@Override
+	public void onSuccess() {
 
-      }
-      @Override
-      public void onError(int errorCode, String errorMsg) {
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
 
-      }
+	}
 });
 ```
 
-28、设置通知事件 （通知只对自己）
+28、设置自己的事件监听 （只对自己）
 ```java
-TalkieManager.setNotificationListener(new TalkieClient.NotificationListener(){
+TalkieManager.setSelfEventListener(new TalkieClient.SelfEventListener(){
       /**
        * 停止说话时回调
-       * @param state  0 手动停止
-       * 			  1 被更高的请求发言的权限打断
-       * 			  2 服务端一段时间未收到语音包 强制打断
-       * 			  3 发言时长达到最大值 服务端强制打断
-       * 			  4 抢麦后一段时间未发送语音包到服务端 自动停止
-       * 			  5 发言中 打电话或来电 强制打断
-       * 			  6 网络不稳定 与服务端连接断开时 强制打断
+       * @param type 参照StopSpeakType枚举
        */
       @Override
-      public void onStopSpeak(int state) {
+      public void onStopSpeak(StopSpeakType type) {
 
       }
-	  /**
+      /**
        * 自己的角色被改变时回调
        */
-      public void onRoleChange(int role){
+      public void onRoleChange(RoomRole role){
 
       }
-	  /**
+      /**
        * 自己被踢出当前房间时回调
        */
-      public void onSelfKicked(){
+      public void onKickedOut(){
 
       }
-	  /**
+      /**
        * 自己被禁言时回调
        */
       public void onSilenced(int hour){
@@ -421,27 +419,39 @@ TalkieManager.setNotificationListener(new TalkieClient.NotificationListener(){
       public void onUnSilenced(){
 
       }
-   });
+      /**
+       * 对讲服务连接成功后回调 表示可以正常收听语音消息
+       */
+      public void onTalkieServerConnected(int onlineSize, int totalSize){
+
+      }
+      /**
+       * 对讲服务断开后回调 表示自己已离线（无法收听语音消息） 
+       * 如果是offline或logout或登录冲突则不会自动连接 需手动执行online操作才能再次连接
+       */
+      public void onTalkieServerDisconnected(){
+
+      }
+});
 ```
 
-29、 设置广播事件（广播对所有人 除了自己）
+29、 设置其他成员事件监听（其他成员的操作事件）
 ```java
-TalkieManager.setBroadcastListener(new TalkieClient.BroadcastListener(){
+TalkieManager.MemberEventListener(new TalkieClient.MemberEventListener(){
       /**
        * 其它用户开始发言事件
        * @param openid 授权用户唯一标识
        */
       @Override
-      public void onStartSpeak(String openid) {
+      public void onMemberStartSpeak(String openid) {
 
       }
-
       /**
        * 其它用户结束发言事件
        * @param openid 授权用户唯一标识
        */
       @Override
-      public void onStopSpeak(String openid) {
+      public void onMemberStopSpeak(String openid) {
 
       }
 
@@ -454,17 +464,17 @@ TalkieManager.setBroadcastListener(new TalkieClient.BroadcastListener(){
        * @param direction 方向
        */
       @Override
-      public void onLocationChange(String openid, float lat, float lon, int speed, int direction) {
+      public void onMemberLocationChange(String openid, float lat, float lon, int speed, int direction) {
 
       }
       /**
        * 其他用户角色改变时
        */
       @Override
-      public void onRoleChange(String openid, int role) {
+      public void onMemberRoleChange(String openid, RoomRole role) {
 
       }
-	  /**
+      /**
        * 其他用户上线时
        */
       @Override
@@ -489,17 +499,17 @@ TalkieManager.setBroadcastListener(new TalkieClient.BroadcastListener(){
        * 其他用户更改房间名称时
        */
       @Override
-      public void onRoomNameChange(String openid, String roomName) {
+      public void onMemberChangeRoomName(String openid, String roomName) {
 
       }
       /**
        * 其他用户更改自己人位置共享开关时
        */
       @Override
-      public void onLocationSharingChange(String openid, String isLocationSharing) {
+      public void onMemberLocationSharingChange(String openid, String isLocationSharing) {
 
       }
-    });
+});
 ```
 
 <h2 id="Server授权">三、Server授权</h2>
@@ -600,3 +610,104 @@ TalkieManager.oauth(openId, token, new TalkieClient.OperationCallback(){
 
       })
 ```
+
+<h2 id="类说明">四、类说明</h2>
+
+
+<h3>实体类</h3>
+
+1、房间信息
+```java
+public class RoomInfo {
+	private String id; 			//唯一标识
+
+	private String name; 			//名称
+
+	private int onlineSize; 		//在线人数
+
+	private int totalSize; 			//总人数
+
+	private boolean locationSharing;	//位置共享开关状态
+	
+	private UserInfo self;			//自己的数据
+}
+```
+2、用户信息
+```java
+public class UserInfo {
+	private String id;			//唯一标识
+
+	private RoomRole role;			//角色
+
+	private boolean isOnline;		//是否在线
+
+	private Permission permission;		//权限
+
+	private boolean isSelf;			//是否是自己
+}
+```
+
+<h3>枚举</h3>
+
+1、房间角色
+```java
+public enum RoomRole {
+	OWNER,					//群主
+	
+	ADMINISTRATOR,				//管理员
+	
+	GENERAL_MEMBER				//普通成员
+}
+```
+2、发言状态
+```java
+public enum MicrophoneState {
+	ERROR,                      		//错误(检查是否配置了ImService)
+
+	LEISURE,                     		//空闲
+
+	REQUEST_SPEAKING,            		//正在请求发言中
+
+	SELF_SPEAKING,               		//自己正在发言
+
+	MEMBER_SPEAKING             		//其他人员正在发言
+}
+```
+3、 停止说话类型
+```java
+public enum StopSpeakType {
+	BY_HAND,                                 //手动丢麦
+
+	BY_HIGHER_PERMISSION,                    //更高的请求发言的权限打断
+
+	BY_SERVER_NO_RECEIVER_AUDIO,             //服务端一段时间未收到语音包 强制打断
+
+	BY_SPEAK_TIME_OUT,                       //发言时长达到最大值 服务端强制打断
+
+	BY_AUTO,                                 //抢麦3秒无发言自动丢麦(群主除外)
+
+	BY_PHONE,                                //发言中 打电话或来电 强制打断
+
+	BY_SOCKET_SERVER_DISCONNECT              //网络不稳定时 Socket服务断开时 强制打断
+}
+```
+
+<h3>其他</h3>
+
+1、用户权限说明
+```java
+public class Permission {
+    public boolean allowSpeak();			//允许发言
+
+    public boolean allowEditRoomName();			//允许编辑群名
+
+    public boolean allowKickRoomUser();			//允许踢出群内成员
+
+    public boolean allowSilencedRoomUser();		//允许禁言群内用户
+
+    public boolean allowUnSilencedRoomUser();		//允许恢复群内被禁言用户
+
+    public boolean allowChangeRole();			//允许修改角色
+}
+```
+
