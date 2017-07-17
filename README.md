@@ -25,7 +25,7 @@
    <uses-permission android:name="android.permission.INTERNET"/>
    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
-   <service android:name="net.easyconn.talkie.im.ImService"
+   <service android:name="net.easyconn.talkie.sdk.ImService"
             android:enabled="true"
             android:exported="true" />
 ```
