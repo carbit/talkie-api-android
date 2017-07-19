@@ -26,9 +26,9 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.android.support:design:23.0.1'
     testCompile 'junit:junit:4.12'
-    compile('io.socket:socket.io-client:0.7.0') {
-        exclude group: 'org.json', module: 'json'
-    }
-    compile 'com.squareup.okhttp:okhttp:+'
-    compile files('libs/talkie_sdk_v2.0.0.jar')
+//    compile('io.socket:socket.io-client:0.7.0') {
+//        exclude group: 'org.json', module: 'json'
+//    }
+//    compile 'com.squareup.okhttp:okhttp:+'
+//    compile files('libs/talkie_sdk_v2.0.0.jar')
 }
