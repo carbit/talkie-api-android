@@ -248,7 +248,11 @@ TalkieManager.getSpeakState();
 
 17、 请求发言
 ```java
-TalkieManager.reqSpeak(new TalkieClient.ReqSpeakCallback(){
+/**
+ * @param isAuto(boolean)  是否检查3秒无语音输入自动丢麦
+ * @param isLong(boolean)  是否发言不限时长(仅对OWNER和ADMINISTRATOR有效)
+ */
+TalkieManager.reqSpeak(isAuto, isLong, new TalkieClient.ReqSpeakCallback(){
 	/**
 	* 准备开始请求发言 状态回调（请求中）
 	*/
@@ -267,12 +271,20 @@ TalkieManager.reqSpeak(new TalkieClient.ReqSpeakCallback(){
 	public void onError(int errorCode, String errorMsg) {
 
 	}
-    }, isAuto, isLong);
+    });
 ```
 
-18、 特权发言
+18、 请求打断并发言
 ```java
-TalkieManager.reqSpeakPrivilege(new TalkieClient.ReqSpeakCallback(){
+/**
+ * 该接口只有OWNER和ADMINISTRATOR有权调用
+ * ADMINISTRATOR可以打断GENERAL_MEMBER的发言
+ * OWNER可以打断ADMINISTRATOR和GENERAL_MEMBER的发言
+ *
+ * @param isAuto(boolean)  是否检查3秒无语音输入自动丢麦
+ * @param isLong(boolean)  是否发言不限时长
+ */
+TalkieManager.reqInterruptAndSpeak(isAuto, isLong, new TalkieClient.ReqSpeakCallback(){
         /**
         * 准备开始请求发言 状态回调（请求中）
         */
@@ -291,7 +303,7 @@ TalkieManager.reqSpeakPrivilege(new TalkieClient.ReqSpeakCallback(){
         public void onError(int errorCode, String errorMsg) {
 
         }
-    }, isAuto, isLong);
+    });
 ```
 
 19、 结束发言
