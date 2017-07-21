@@ -267,15 +267,39 @@ TalkieManager.reqSpeak(new TalkieClient.ReqSpeakCallback(){
 	public void onError(int errorCode, String errorMsg) {
 
 	}
-    });
+    }, isAuto, isLong);
 ```
 
-18、 结束发言
+18、 特权发言
+```java
+TalkieManager.reqSpeakPrivilege(new TalkieClient.ReqSpeakCallback(){
+        /**
+        * 准备开始请求发言 状态回调（请求中）
+        */
+        @Override
+        public void onReady() {
+
+        }
+        /**
+        * 请求发言成功 （发言中）
+        */
+        @Override
+        public void onSuccess() {
+
+        }
+        @Override
+        public void onError(int errorCode, String errorMsg) {
+
+        }
+    }, isAuto, isLong);
+```
+
+19、 结束发言
 ```java
 TalkieManager.stopSpeak();
 ```
 
-19、 更新位置
+20、 更新位置
 ```java
 /**
  * @param lat(float) 纬度
@@ -286,12 +310,12 @@ TalkieManager.stopSpeak();
 TalkieManager.location(lat, lon, speed, direction);
 ```
 
-20、 设置对讲播放音量（0.01-0.99）
+21、 设置对讲播放音量（0.01-0.99）
 ```java
 TalkieManager.setTalkieVolume(volume);
 ```
 
-21、修改房间名称
+22、修改房间名称
 ```java
 TalkieManager.setRoomName(roomId, name, new TalkieClient.OperationCallback(){
 	@Override
@@ -305,7 +329,7 @@ TalkieManager.setRoomName(roomId, name, new TalkieClient.OperationCallback(){
 });
 ```
 
-22、设置全局静音设置
+23、设置全局静音设置
 ```java
 TalkieManager.setGlobalMute(isGlobalMute, new TalkieClient.OperationCallback(){
 	@Override
@@ -319,7 +343,7 @@ TalkieManager.setGlobalMute(isGlobalMute, new TalkieClient.OperationCallback(){
 });
 ```
 
-23、位置共享开关
+24、位置共享开关
 ```java
 TalkieManager.setLocationSharing(roomId, isSharing, new TalkieClient.OperationCallback(){
 	@Override
@@ -333,7 +357,7 @@ TalkieManager.setLocationSharing(roomId, isSharing, new TalkieClient.OperationCa
 });
 ```
 
-24、设置房间管理角色
+25、设置房间管理角色
 ```java
 /**
 * @param role 角色 参照RoomRole枚举
@@ -350,7 +374,7 @@ TalkieManager.setRoomRole(roomId, openId, role, new TalkieClient.OperationCallba
 });
 ```
 
-25、踢人
+26、踢人
 ```java
 TalkieManager.kickUser(roomId, openId, hour, new TalkieClient.OperationCallback(){
 	@Override
@@ -364,7 +388,7 @@ TalkieManager.kickUser(roomId, openId, hour, new TalkieClient.OperationCallback(
 });
 ```
 
-26、禁言
+27、禁言
 ```java
 TalkieManager.silenced(roomId, openId, hour, new TalkieClient.OperationCallback(){
 	@Override
@@ -378,7 +402,7 @@ TalkieManager.silenced(roomId, openId, hour, new TalkieClient.OperationCallback(
 });
 ```
 
-27、取消禁言（暂未实现）
+28、取消禁言
 ```java
 TalkieManager.unSilenced(roomId, openId, new TalkieClient.OperationCallback(){
 	@Override
@@ -392,7 +416,22 @@ TalkieManager.unSilenced(roomId, openId, new TalkieClient.OperationCallback(){
 });
 ```
 
-28、设置自己的事件监听 （只对自己）
+29、解散频道
+```java
+TalkieManager.dismiss(roomId, new TalkieClient.OperationCallback(){
+        @Override
+        public void onSuccess() {
+
+        }
+        @Override
+        public void onError(int errorCode, String errorMsg) {
+
+        }
+
+});
+```
+
+30、设置自己的事件监听 （只对自己）
 ```java
 TalkieManager.setSelfEventListener(new TalkieClient.SelfEventListener(){
       /**
@@ -443,7 +482,7 @@ TalkieManager.setSelfEventListener(new TalkieClient.SelfEventListener(){
 });
 ```
 
-29、 设置其他成员事件监听（其他成员的操作事件）
+31、 设置其他成员事件监听（其他成员的操作事件）
 ```java
 TalkieManager.MemberEventListener(new TalkieClient.MemberEventListener(){
       /**
@@ -517,15 +556,22 @@ TalkieManager.MemberEventListener(new TalkieClient.MemberEventListener(){
       public void onMemberLocationSharingChange(String openid, String isLocationSharing) {
 
       }
+      /**
+       * 频道被解散
+       */
+      @Override
+      public void onDismiss(String openid){
+
+      }
 });
 ```
 
-30、获取SDK版本号
+32、获取SDK版本号
 ```java
 TalkieManager.getSdkVersion()
 ```
 
-31、 获取SDK buildNumber
+33、 获取SDK buildNumber
 ```java
 TalkieManager.getBuildNumber()
 ```
@@ -702,7 +748,7 @@ public enum StopSpeakType {
 
 	BY_SPEAK_TIME_OUT,                       //发言时长达到最大值 服务端强制打断
 
-	BY_AUTO,                                 //抢麦3秒无发言自动丢麦(群主除外)
+	BY_AUTO,                                 //抢麦3秒无发言自动丢麦
 
 	BY_PHONE,                                //发言中 打电话或来电 强制打断
 
