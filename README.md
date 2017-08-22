@@ -513,6 +513,15 @@ TalkieManager.MemberEventListener(new TalkieClient.MemberEventListener(){
       public void onMemberStopSpeak(String openid) {
 
       }
+      
+      /**
+       * 其它用户结束发言事件(客户端2S未收到语音包)
+       * @param openid 授权用户唯一标识
+       */
+      @Override
+      public void onMemberStopSpeakByTimeout(String openid) {
+
+      }
 
       /**
        * 其它用户位置变更事件
