@@ -522,6 +522,11 @@ public class InfoActivity extends AppCompatActivity {
             }
 
             @Override
+            public void onMemberStopSpeakByTimeout(String openId) {
+                vMemberSpeak.setText(String.format("%s 停止说话(超时检测)", openId));
+            }
+
+            @Override
             public void onMemberLocationChange(String openId, double latitude, double longitude, int speed, int direction) {
                 vBroadcast.setText(String.format("user(%s) 位置变更\n纬度:%s\n经度:%s", openId, latitude, longitude));
             }
