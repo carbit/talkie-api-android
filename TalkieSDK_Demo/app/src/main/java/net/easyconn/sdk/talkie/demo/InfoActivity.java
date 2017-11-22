@@ -635,7 +635,7 @@ public class InfoActivity extends AppCompatActivity {
                 viewHolder = (ViewHolder) convertView.getTag();
             }
             UserInfo user = mUsers.get(position);
-            viewHolder.vOpenId.setText(user.getOpenId());
+            viewHolder.vOpenId.setText(String.format("%s (%s)", user.getOpenId(), user.getAliasName()));
 
             return convertView;
         }

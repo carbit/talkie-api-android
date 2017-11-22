@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -36,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar vToolbar;
 
     private CheckBox vGlobalMute;
+
+    private EditText vNick, vAvatar, vMobile;
+
+    private Button vSetInfo;
 
     private ListView vListView;
 
@@ -79,6 +84,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initView() {
+        vNick = (EditText) findViewById(R.id.et_nick);
+        vAvatar = (EditText) findViewById(R.id.et_avatar);
+        vMobile = (EditText) findViewById(R.id.et_mobile);
+        vSetInfo = (Button) findViewById(R.id.btn_set_info);
+
         vGlobalMute = (CheckBox) findViewById(R.id.cb_global_mute);
         vListView = (ListView) findViewById(R.id.list_view);
         vToolbar = (Toolbar) findViewById(R.id.tool_bar);
@@ -139,6 +149,39 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         vGlobalMute.setOnCheckedChangeListener(mGlobalMuteCheckedChangeListener);
+
+        vSetInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String nick = vNick.getText().toString().trim();
+                String avatar = vAvatar.getText().toString().trim();
+                String mobile = vMobile.getText().toString().trim();
+                if (TextUtils.isEmpty(nick)) {
+                    toast("nick不能为空");
+                    return;
+                }
+                if (TextUtils.isEmpty(avatar)) {
+                    toast("avatar不能为空");
+                    return;
+                }
+                if (TextUtils.isEmpty(mobile)) {
+                    toast("mobile不能为空");
+                    return;
+                }
+
+                TalkieManager.setUserInfo(nick, avatar, mobile, new TalkieClient.OperationCallback() {
+                    @Override
+                    public void onSuccess() {
+                        toast("设置用户信息成功");
+                    }
+
+                    @Override
+                    public void onError(int errorCode, String errorMsg) {
+                        toastError("设置用户信息失败", errorCode, errorMsg);
+                    }
+                });
+            }
+        });
     }
 
     private boolean isRequesting;
