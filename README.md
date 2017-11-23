@@ -597,6 +597,20 @@ TalkieManager.getSdkVersion()
 TalkieManager.getBuildNumber()
 ```
 
+34、设置用户信息
+```java
+TalkieManager.setUserInfo(nick, avatar, mobile, new TalkieClient.OperationCallback(){
+	@Override
+	public void onSuccess() {
+
+	}
+	@Override
+	public void onError(int errorCode, String errorMsg) {
+
+	}
+})
+```
+
 <h2 id="Server授权">三、Server授权</h2>
 
 Server授权整体流程：
